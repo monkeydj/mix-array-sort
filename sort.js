@@ -18,30 +18,25 @@ function sortMixedArray(arr = []) {
     return arr.filter(isAllowedFormat).sort(compareMixedFormats);
 }
 
-// filter out values containing mixed characters
+// check if a value is in "allowed" format
 function isAllowedFormat(val) {
-    return NUMBERS_REGEX.test(val) ||  LETTERS_REGEX.test(val) || SPECIAL_CHARS_REGEX.test(val);
+    return NUMBERS_REGEX.test(val) || LETTERS_REGEX.test(val) || SPECIAL_CHARS_REGEX.test(val);
 }
 
 function compareMixedFormats(a = '', b = '') {
 
-    if (SPECIAL_CHARS_REGEX.test(b)) {
+    var bIsNumber = NUMBERS_REGEX.test(b);
+    // if both are numbers then compare by their numeric values
+    // otherwise, 'a' is always placed before 'b'
+    if (NUMBERS_REGEX.test(a)) return bIsNumber ? a - b : -1;
+    // value of only special chars must be placed last
+    if (SPECIAL_CHARS_REGEX.test(a) && (LETTERS_REGEX.test(b) || bIsNumber)) return 1;
 
-        if (LETTERS_REGEX.test(a) || NUMBERS_REGEX.test(a)) return -1;
-
-    } else if (LETTERS_REGEX.test(b)) {
-
-        if (SPECIAL_CHARS_REGEX.test(a)) return 1;
-        if (NUMBERS_REGEX.test(a)) return -1;
-
-    } else if (NUMBERS_REGEX.test(b)) {
-
-        if (SPECIAL_CHARS_REGEX.test(a) || LETTERS_REGEX.test(a)) return 1;
-        // if both are numbers, they would be compared by their numeric values
-        if (NUMBERS_REGEX.test(a)) return a - b;
-
+    if (LETTERS_REGEX.test(a)) {
+        if (bIsNumber) return 1;
+        if (SPECIAL_CHARS_REGEX.test(b)) return -1;
     }
-    // in JS, string values can be compared against each other by their ASCII values
-    return a < b ? -1 : a > b;
+    // else, both 'a' & 'b' are either letters-only or special chars-only
+    return a < b ? -1 : a > b; // in JS, strings are compared by their ASCII values
 
 }
