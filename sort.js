@@ -2,39 +2,48 @@ const LETTERS_REGEX = /^[A-Za-z]+$/; // any string contains only letters
 const SPECIAL_CHARS_REGEX = /^[^\w]+$/; // any string contains only non-alphanumeric characters
 const NUMBERS_REGEX = /^\d+$/;
 
-function sortMixedArray(arr = []) {
-
-    var strArr = arr.filter((value) => LETTERS_REGEX.test(value));
-    var scArr = arr.filter((value) => SPECIAL_CHARS_REGEX.test(value));
-    var numArr = arr.filter((value) => NUMBERS_REGEX.test(value))
-
-    return [
-        ...numArr.sort((a, b) => a - b),
-        ...strArr.sort(compareByASCII),
-        ...scArr.sort(compareByASCII)
-    ];
-
-}
-
-function compareByASCII(str1 = '', str2 = '') {
-    
-    for (let i = 0, len = str1.length; i < len; i++) { 
-
-        let c1 = str1.charCodeAt(i), c2 = str2.charCodeAt(i);
-        
-        if (c1 !== c2) return c1 - c2;
-
-    }
-
-    return 0;
-
-}
-
-
 if (require.main === module) {
 
     console.log(sortMixedArray([5, 3, 2, 4]));
     console.log(sortMixedArray([1, 2, 3, 'a', 'B']));
     console.log(sortMixedArray(["ax", "mof", "4", "63", "42", "3", "10", "[", "23", "adidas", "ba", ")", "ABC"]));
 
-} else module.exports = sortMixedArray;
+    return; // end of module direct run
+
+}
+
+module.exports = sortMixedArray;
+
+function sortMixedArray(arr = []) {
+
+    return arr.filter(isAllowedFormat).sort(compareMixedFormats);
+
+    // filter out values containing mixed characters
+    function isAllowedFormat(val) {
+        return NUMBERS_REGEX.test(val) ||  LETTERS_REGEX.test(val) || SPECIAL_CHARS_REGEX.test(val);
+    }
+
+}
+
+function compareMixedFormats(a = '', b = '') {
+
+    if (SPECIAL_CHARS_REGEX.test(b)) {
+
+        if (LETTERS_REGEX.test(a) || NUMBERS_REGEX.test(a)) return -1;
+
+    } else if (LETTERS_REGEX.test(b)) {
+
+        if (SPECIAL_CHARS_REGEX.test(a)) return 1;
+        if (NUMBERS_REGEX.test(a)) return -1;
+
+    } else if (NUMBERS_REGEX.test(b)) {
+
+        if (SPECIAL_CHARS_REGEX.test(a) || LETTERS_REGEX.test(a)) return 1;
+        // if both are numbers, they would be compared by their numeric values
+        if (NUMBERS_REGEX.test(a)) return a - b;
+
+    }
+    // in JS, string values can be compared against each other by their ASCII values
+    return a < b ? -1 : a > b;
+
+}
