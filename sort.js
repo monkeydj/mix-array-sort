@@ -1,5 +1,5 @@
-const CHARS_REGEX = /^[A-Za-z]+$/;
-const SPECIAL_CHARS_REGEX = /^[\[\\\^\s\$\.\|\?\*\+\(\)\{\}\]]+$/;
+const CHARS_REGEX = /^[A-Za-z]+$/; // any string starts with a letter
+const SPECIAL_CHARS_REGEX = /^[^\w]+$/; // any string starts with a non-alphanumeric characters
 const NUMBERS_REGEX = /^\d+$/;
 
 function sortMixedArray(arr = []) {
@@ -16,13 +16,13 @@ function sortMixedArray(arr = []) {
 
 }
 
-function compareByASCII(str1 = '', str2 = '', reverted = false) {
+function compareByASCII(str1 = '', str2 = '') {
     
     for (let i = 0, len = str1.length; i < len; i++) { 
 
         let c1 = str1.charCodeAt(i), c2 = str2.charCodeAt(i);
         
-        if (c1 !== c2) return reverted ? c2 - c1 : c1 - c2;
+        if (c1 !== c2) return c1 - c2;
 
     }
 
