@@ -1,0 +1,19 @@
+{
+  "name": "mix-sort",
+  "version": "1.0.0",
+  "description": "sorting an array with mixed values",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://monkeydj@github.com/monkeydj/mix-array-sort.git"
+  },
+  "author": "duy.ton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monkeydj/mix-array-sort/issues"
+  },
+  "homepage": "https://github.com/monkeydj/mix-array-sort#readme"
+}
