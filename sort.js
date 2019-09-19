@@ -1,10 +1,10 @@
-const CHARS_REGEX = /^[A-Za-z]+$/; // any string starts with a letter
-const SPECIAL_CHARS_REGEX = /^[^\w]+$/; // any string starts with a non-alphanumeric characters
+const LETTERS_REGEX = /^[A-Za-z]+$/; // any string contains only letters
+const SPECIAL_CHARS_REGEX = /^[^\w]+$/; // any string contains only non-alphanumeric characters
 const NUMBERS_REGEX = /^\d+$/;
 
 function sortMixedArray(arr = []) {
 
-    var strArr = arr.filter((value) => CHARS_REGEX.test(value));
+    var strArr = arr.filter((value) => LETTERS_REGEX.test(value));
     var scArr = arr.filter((value) => SPECIAL_CHARS_REGEX.test(value));
     var numArr = arr.filter((value) => NUMBERS_REGEX.test(value))
 
