@@ -62,5 +62,32 @@
             ")",
             "["
         ]
+    },
+    {
+        "input": [
+            "{",
+            "}",
+            0,
+            "042",
+            "!",
+            "She",
+            "sells",
+            "seashells",
+            "by",
+            "the",
+            "sea-shore"
+        ],
+        "output": [
+            0,
+            "042",
+            "She",
+            "by",
+            "seashells",
+            "sells",
+            "the",
+            "!",
+            "{",
+            "}"
+        ]
     }
 ]
