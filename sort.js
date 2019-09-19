@@ -15,14 +15,12 @@ if (require.main === module) {
 module.exports = sortMixedArray;
 
 function sortMixedArray(arr = []) {
-
     return arr.filter(isAllowedFormat).sort(compareMixedFormats);
+}
 
-    // filter out values containing mixed characters
-    function isAllowedFormat(val) {
-        return NUMBERS_REGEX.test(val) ||  LETTERS_REGEX.test(val) || SPECIAL_CHARS_REGEX.test(val);
-    }
-
+// filter out values containing mixed characters
+function isAllowedFormat(val) {
+    return NUMBERS_REGEX.test(val) ||  LETTERS_REGEX.test(val) || SPECIAL_CHARS_REGEX.test(val);
 }
 
 function compareMixedFormats(a = '', b = '') {
